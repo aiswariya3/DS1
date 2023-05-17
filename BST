@@ -1,0 +1,61 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Structure for a BST node
+struct node {
+    int key;
+    struct node* left;
+    struct node* right;
+};
+
+// Function to create a new node
+struct node* createNode(int item)
+{
+    struct node* newNode = (struct node*)malloc(sizeof(struct node));
+    newNode->key = item;
+    newNode->left = newNode->right = NULL;
+    return newNode;
+}
+
+// Function to insert a new node in BST
+struct node* insertNode(struct node* root, int key)
+{
+    // If the tree is empty, return a new node
+    if (root == NULL)
+        return createNode(key);
+
+    // Otherwise, do recursive insertion
+    if (key < root->key)
+        root->left = insertNode(root->left, key);
+    else if (key > root->key)
+        root->right = insertNode(root->right, key);
+
+    return root;
+}
+
+// Function to perform an in-order traversal of the BST
+void inorderTraversal(struct node* root)
+{
+    if (root != NULL) {
+        inorderTraversal(root->left);
+        printf("%d ", root->key);
+        inorderTraversal(root->right);
+    }
+}
+
+int main()
+{
+    struct node* root = NULL;
+    root = insertNode(root, 50);
+    insertNode(root, 30);
+    insertNode(root, 20);
+    insertNode(root, 40);
+    insertNode(root, 70);
+    insertNode(root, 60);
+    insertNode(root, 80);
+
+    printf("In-order traversal of the BST: ");
+    inorderTraversal(root);
+
+    return 0;
+}
